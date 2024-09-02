@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review - University Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #f4f4f4;
+            background-color: #121212;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            background-color: #1e1e1e;
+            padding: 1rem;
+        }
+        .navbar a {
+            color: #f4f4f4;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+        }
+        .navbar a:hover {
+            background-color: #333;
+        }
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            color: #f4f4f4;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .navbar .logo img {
+            height: 40px;
+            margin-right: 0.5rem;
+        }
+        .container {
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 4rem;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+        }
+        .section {
+            margin-bottom: 2rem;
+        }
+        h1 {
+            color: #e0e0e0;
+        }
+        p {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+        .textbox {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: #2e2e2e;
+            color: #f4f4f4;
+        }
+        .button {
+            background-color: #21a70a;
+            color: #f4f4f4;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #54ef21;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img class="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSadbBO57YIUp9s54yBrhwIRNNaLtbtH-A2Ug&usqp=CAU" style="width: 60px; height: 50px; border-radius: 60%; object-fit: cover;">
+            <a class="navbar-brand" style="font-size: 30px; margin-left: -17px;">UniversityFindr</a>
+        </div>
+        <div>
+            <a href="index2.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="review.html">Review</a>
+            <a href="profile.php">Profile</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="section">
+            <h1>Submit Your Feedback</h1>
+            <form  action="review.php" method="POST">
+                
+                <label for="review">Review:</label>
+                <textarea id="review" name="review" class="textbox" rows="6" required></textarea>
+                <label>Rate Us:</label>
+                <div class="stars" id="starRating">
+                    <span data-value="1">&#9734;</span> <!-- Hollow star -->
+                    <span data-value="2">&#9734;</span>
+                    <span data-value="3">&#9734;</span>
+                    <span data-value="4">&#9734;</span>
+                    <span data-value="5">&#9734;</span>
+                </div>
+                <button type="submit" class="button">Submit Review</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const stars = document.querySelectorAll('#starRating span');
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                let rating = this.getAttribute('data-value');
+                stars.forEach(s => s.innerHTML = '&#9734;'); // Reset all stars to hollow
+                for (let i = 0; i < rating; i++) {
+                    stars[i].innerHTML = '&#9733;'; // Fill stars up to clicked star
+                }
+                // Send the rating to PHP via AJAX
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'submit_rating.php', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.send('rating=' + rating);
+            });
+        });
+    });
+    </script>
+</body>
+</html>
